@@ -1,28 +1,45 @@
-
 #include <stdio.h>
 
-#define IN 1 //inside a word
-#define OUT 0 //outside a word
+#define BIGGEST 10
+#define IN 1
+#define OUT 0
 
-int main(int argc, const char* argv[]) {
+int main()
+{
+    int c = EOF;
+    int i = 0;
+    int j = 0;
+    int arr_len[BIGGEST + 1];
+    int state = IN;
+    int nc = 0;
 
-    long nc, nl, nw;
-    int c, state = OUT;
-    nc = nl = nw = 0;
-
-
-    while ((c = getchar()) != EOF) {
+    for (i = 0; i <= BIGGEST; ++i) {
+        arr_len[i] = 0;
+    }
+    while ((c = getchar()) != EOF)
+    {
         ++nc;
-        if (c == '\n') { ++nl; }
-        if (c == ' ' || c == '\n' || c == '\t') { state = OUT; }
-        else if (state == OUT) {
+        if (c == ' ' || c == '\t' || c == '\n')
+        {
+            state = OUT;
+            --nc;
+        }
+        if (state == OUT)
+        {
+            if (nc != 0 && nc <= BIGGEST) {
+                ++arr_of_len[nc];
+            }
             state = IN;
-            ++nw;
+            nc = 0;
         }
     }
-
-    printf("%ld chars, %ld words, and %ld lines \n", nc, nw, nl);
+    for (i = 1; i <= BIGGEST; ++i)
+    {
+        printf("|%2d| ", i);
+        for (j = 0; j < arr_of_len[i]; ++j) {
+            putchar('*');
+        }
+        putchar('\n');
+    }
     return 0;
 }
-
-
